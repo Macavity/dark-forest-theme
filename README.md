@@ -21,6 +21,16 @@ A moss-green dark forest theme for [Grove](https://github.com/grove-notes/grove)
 
    That reads Grove's `recent-workspaces.json`, prompts you to choose, and creates a symlink at `<workspace>/.grove/themes/dark-forest/`. Pass `--workspace <name|path|id>` to skip the prompt, `--force` to replace an existing target.
 
+   If Grove is running, you can query its live API instead of the on-disk file — handy if you're not sure the file is up to date:
+
+   ```sh
+   pnpm run install:theme --api http://127.0.0.1:60557
+   # or
+   GROVE_API_URL=http://127.0.0.1:60557 pnpm run install:theme
+   ```
+
+   (The port is OS-assigned; find it in Grove's devtools or via `lsof -nP -iTCP -sTCP:LISTEN -c Grove`.)
+
    Or do it by hand if you prefer:
 
    ```sh

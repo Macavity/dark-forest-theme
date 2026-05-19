@@ -1,11 +1,13 @@
 // Symlinks this theme into one of Grove's registered workspaces.
 //
-// Reads Grove's `recent-workspaces.json` (the same file the desktop app
-// uses to populate its "Open workspace" dropdown), prints a numbered
-// list, and links `<chosen>/.grove/themes/dark-forest` → this repo.
+// By default reads Grove's `recent-workspaces.json` (the same file the
+// desktop app uses to populate its workspace dropdown). Pass
+// `--api <url>` (or set GROVE_API_URL) to instead query a running Grove
+// instance's `/api/workspaces/recent` endpoint.
 //
-// Pass `--workspace <name|path|id>` to skip the prompt, or `--force` to
-// replace an existing target without asking.
+// Other flags:
+//   --workspace <name|path|id>   skip the prompt and link straight in
+//   --force                      replace an existing target without asking
 
 import { existsSync, readFileSync, lstatSync, rmSync, mkdirSync, symlinkSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
@@ -30,7 +32,7 @@ function userDataDir() {
   }
 }
 
-function readWorkspaces() {
+function readWorkspacesFromFile() {
   const file = join(userDataDir(), 'recent-workspaces.json');
   if (!existsSync(file)) {
     console.error(`No Grove workspace registry found at:\n  ${file}\n`);
@@ -47,14 +49,43 @@ function readWorkspaces() {
   return parsed.filter((w) => w && typeof w.path === 'string' && existsSync(w.path));
 }
 
+async function readWorkspacesFromApi(baseUrl) {
+  const url = baseUrl.replace(/\/$/, '') + '/api/workspaces/recent';
+  let res;
+  try {
+    res = await fetch(url, { signal: AbortSignal.timeout(2000) });
+  } catch (err) {
+    console.error(`Could not reach Grove API at ${url}: ${err.message}`);
+    console.error('Is Grove running on that port?');
+    process.exit(1);
+  }
+  if (!res.ok) {
+    console.error(`Grove API returned ${res.status} ${res.statusText}`);
+    process.exit(1);
+  }
+  const body = await res.json();
+  const list = Array.isArray(body) ? body : body.workspaces;
+  if (!Array.isArray(list)) {
+    console.error('Unexpected response shape from Grove API.');
+    process.exit(1);
+  }
+  return list.filter((w) => w && typeof w.path === 'string' && existsSync(w.path));
+}
+
 function parseArgs(argv) {
-  const args = { workspace: null, force: false };
+  const args = { workspace: null, force: false, api: process.env.GROVE_API_URL || null };
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--force' || a === '-f') args.force = true;
     else if (a === '--workspace' || a === '-w') args.workspace = argv[++i];
+    else if (a === '--api') args.api = argv[++i];
     else if (a === '--help' || a === '-h') {
-      console.log(`Usage: pnpm run install:theme [--workspace <name|path|id>] [--force]`);
+      console.log(
+        `Usage: pnpm run install:theme [--workspace <name|path|id>] [--api <url>] [--force]\n` +
+          `  --api          query a running Grove (e.g. http://127.0.0.1:60557).\n` +
+          `                 Also honoured via GROVE_API_URL. Defaults to reading\n` +
+          `                 recent-workspaces.json from the user data dir.`,
+      );
       process.exit(0);
     }
   }
@@ -99,7 +130,9 @@ async function confirmOverwrite(target) {
 }
 
 const args = parseArgs(process.argv);
-const workspaces = readWorkspaces();
+const workspaces = args.api
+  ? await readWorkspacesFromApi(args.api)
+  : readWorkspacesFromFile();
 if (workspaces.length === 0) {
   console.error('No reachable workspaces in Grove\'s recent list.');
   process.exit(1);
