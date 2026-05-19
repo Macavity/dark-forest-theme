@@ -8,7 +8,8 @@
   "type": "module",
   "scripts": {
     "build:fonts": "node scripts/build-fonts.mjs",
-    "validate": "node scripts/validate-manifest.mjs"
+    "validate": "node scripts/validate-manifest.mjs",
+    "install:theme": "node scripts/install.mjs"
   },
   "devDependencies": {
     "@fontsource-variable/dm-sans": "^5.2.0",
