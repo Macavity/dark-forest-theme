@@ -34,23 +34,29 @@ A moss-green dark forest theme for [Grove](https://github.com/grove-notes/grove)
    Or do it by hand if you prefer:
 
    ```sh
-   ln -s "$PWD" /path/to/your/workspace/.grove/themes/dark-forest
+   ln -s "$PWD/src" /path/to/your/workspace/.grove/themes/dark-forest
    ```
 
-   (The directory name must be `dark-forest` — it has to match the manifest `id`.)
+   (Link `src/`, not the repo root — see the note below. The directory name must be `dark-forest` to match the manifest `id`.)
 
 3. **Pick the theme** in Grove → Settings → Marketplace → Themes → Dark Forest. Set it as the active light *and* dark theme — a single CSS file covers both schemes.
 
 ## What's in here
 
+The repo splits into two halves: `src/` is *the theme* (what Grove sees), everything else is *dev/build scaffolding* (only used to produce `src/`).
+
 | File | Purpose |
 | --- | --- |
-| `theme.json` | Grove manifest (`id`, `modes`, `entry`, …) |
-| `theme.css` | The whole theme — `@font-face` declarations + `--px-*` token overrides |
-| `fonts/*.woff2` | Bundled latin subsets of Cormorant Garamond, DM Sans (variable), JetBrains Mono |
-| `scripts/build-fonts.mjs` | Copies the `.woff2` files out of `@fontsource` packages into `fonts/` |
-| `scripts/validate-manifest.mjs` | Validates `theme.json` against `@grove-notes/manifest-schema` |
-| `scripts/install.mjs` | Picks one of your registered Grove workspaces and symlinks the theme into it |
+| `src/theme.json` | Grove manifest (`id`, `modes`, `entry`, …) |
+| `src/theme.css` | The whole theme — `@font-face` declarations + `--px-*` token overrides |
+| `src/fonts/*.woff2` | Bundled latin subsets of Cormorant Garamond, DM Sans (variable), JetBrains Mono |
+| `scripts/build-fonts.mjs` | Copies the `.woff2` files out of `@fontsource` packages into `src/fonts/` |
+| `scripts/validate-manifest.mjs` | Validates `src/theme.json` against `@grove-notes/manifest-schema` |
+| `scripts/install.mjs` | Picks one of your registered Grove workspaces and symlinks `src/` into it |
+
+### Why a `src/` subdirectory?
+
+Grove's theme dir is served as static assets to the renderer — anything inside `<workspace>/.grove/themes/<id>/` is reachable on `/api/workspaces/<wid>/themes/<id>/<path>`. If you symlinked the whole dev repo, that mount would serve `node_modules/`, `package.json`, `pnpm-lock.yaml`, and the scripts as `application/octet-stream`. Linking only `src/` keeps the surface area minimal and reproduces what an official marketplace release (zip) would contain.
 
 ## Requirements
 
