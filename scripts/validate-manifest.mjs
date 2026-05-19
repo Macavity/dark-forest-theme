@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { parseThemeManifest } from '@grove-notes/manifest-schema';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const manifestPath = resolve(here, '..', 'src', 'theme.json');
+const manifestPath = resolve(here, '..', 'dist', 'theme.json');
 const raw = JSON.parse(await readFile(manifestPath, 'utf-8'));
 
 try {

@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
-const fontsDir = resolve(root, 'src', 'fonts');
+const fontsDir = resolve(root, 'dist', 'fonts');
 const nm = resolve(root, 'node_modules');
 
 const copies = [
@@ -49,4 +49,4 @@ if (missing.length) {
   process.exit(1);
 }
 
-console.log(`\nCopied ${copied} font files into src/fonts/`);
+console.log(`\nCopied ${copied} font files into dist/fonts/`);

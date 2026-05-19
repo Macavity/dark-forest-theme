@@ -8,6 +8,7 @@
   "type": "module",
   "scripts": {
     "build:fonts": "node scripts/build-fonts.mjs",
+    "build:zip": "node scripts/build-zip.mjs",
     "validate": "node scripts/validate-manifest.mjs",
     "install:theme": "node scripts/install.mjs"
   },

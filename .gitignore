@@ -2,3 +2,6 @@ node_modules/
 .DS_Store
 *.log
 .pnpm-store/
+
+# Release artifacts — built by `pnpm run build:zip`, uploaded to GitHub releases.
+dark-forest-*.zip

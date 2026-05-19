@@ -37,26 +37,38 @@ A moss-green dark forest theme for [Grove](https://github.com/grove-notes/grove)
    ln -s "$PWD/src" /path/to/your/workspace/.grove/themes/dark-forest
    ```
 
-   (Link `src/`, not the repo root — see the note below. The directory name must be `dark-forest` to match the manifest `id`.)
+   (Link `dist/`, not the repo root — see the note below. The directory name must be `dark-forest` to match the manifest `id`.)
 
 3. **Pick the theme** in Grove → Settings → Marketplace → Themes → Dark Forest. Set it as the active light *and* dark theme — a single CSS file covers both schemes.
 
 ## What's in here
 
-The repo splits into two halves: `src/` is *the theme* (what Grove sees), everything else is *dev/build scaffolding* (only used to produce `src/`).
+The repo splits into two halves: `dist/` is *the theme* (what Grove sees and what gets zipped for release), everything else is *dev/build scaffolding* (only used to produce `dist/`).
 
 | File | Purpose |
 | --- | --- |
-| `src/theme.json` | Grove manifest (`id`, `modes`, `entry`, …) |
-| `src/theme.css` | The whole theme — `@font-face` declarations + `--px-*` token overrides |
-| `src/fonts/*.woff2` | Bundled latin subsets of Cormorant Garamond, DM Sans (variable), JetBrains Mono |
-| `scripts/build-fonts.mjs` | Copies the `.woff2` files out of `@fontsource` packages into `src/fonts/` |
-| `scripts/validate-manifest.mjs` | Validates `src/theme.json` against `@grove-notes/manifest-schema` |
-| `scripts/install.mjs` | Picks one of your registered Grove workspaces and symlinks `src/` into it |
+| `dist/theme.json` | Grove manifest (`id`, `modes`, `entry`, …) |
+| `dist/theme.css` | The whole theme — `@font-face` declarations + `--px-*` token overrides |
+| `dist/fonts/*.woff2` | Bundled latin subsets of Cormorant Garamond, DM Sans (variable), JetBrains Mono |
+| `scripts/build-fonts.mjs` | Copies the `.woff2` files out of `@fontsource` packages into `dist/fonts/` |
+| `scripts/build-zip.mjs` | Produces `dark-forest-<version>.zip` from `dist/` for GitHub releases |
+| `scripts/validate-manifest.mjs` | Validates `dist/theme.json` against `@grove-notes/manifest-schema` |
+| `scripts/install.mjs` | Picks one of your registered Grove workspaces and symlinks `dist/` into it |
 
-### Why a `src/` subdirectory?
+### Why a `dist/` subdirectory?
 
-Grove's theme dir is served as static assets to the renderer — anything inside `<workspace>/.grove/themes/<id>/` is reachable on `/api/workspaces/<wid>/themes/<id>/<path>`. If you symlinked the whole dev repo, that mount would serve `node_modules/`, `package.json`, `pnpm-lock.yaml`, and the scripts as `application/octet-stream`. Linking only `src/` keeps the surface area minimal and reproduces what an official marketplace release (zip) would contain.
+Grove's theme dir is served as static assets to the renderer — anything inside `<workspace>/.grove/themes/<id>/` is reachable on `/api/workspaces/<wid>/themes/<id>/<path>`. If you symlinked the whole dev repo, that mount would serve `node_modules/`, `package.json`, `pnpm-lock.yaml`, and the scripts as `application/octet-stream`. Linking only `dist/` keeps the surface area minimal — and matches exactly what gets zipped for a marketplace release.
+
+## Release
+
+```sh
+pnpm install
+pnpm run build:fonts        # populate dist/fonts/
+pnpm run validate           # check theme.json against the published schema
+pnpm run build:zip          # produces dark-forest-<version>.zip at the repo root
+```
+
+Attach the zip to a GitHub release. Grove's marketplace install flow downloads from `github.com`, `codeload.github.com`, or `objects.githubusercontent.com` only, so a GitHub release asset is the simplest distribution channel.
 
 ## Requirements
 

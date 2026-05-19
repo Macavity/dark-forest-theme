@@ -17,10 +17,10 @@ import { createInterface } from 'node:readline/promises';
 import { stdin, stdout } from 'node:process';
 
 const here = dirname(fileURLToPath(import.meta.url));
-// Symlink only `src/` — the dev repo root has node_modules, scripts,
+// Symlink only `dist/` — the dev repo root has node_modules, scripts,
 // package.json, etc. that Grove would otherwise serve via its static
 // theme mount as application/octet-stream.
-const themeRoot = resolve(here, '..', 'src');
+const themeRoot = resolve(here, '..', 'dist');
 const themeId = 'dark-forest';
 
 function userDataDir() {
