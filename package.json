@@ -1,0 +1,19 @@
+{
+  "name": "@dark-forest/grove-theme",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A moss-green dark forest theme for Grove.",
+  "license": "MIT",
+  "author": "Alexander Pape",
+  "type": "module",
+  "scripts": {
+    "build:fonts": "node scripts/build-fonts.mjs",
+    "validate": "node scripts/validate-manifest.mjs"
+  },
+  "devDependencies": {
+    "@fontsource-variable/dm-sans": "^5.2.0",
+    "@fontsource/cormorant-garamond": "^5.2.0",
+    "@fontsource/jetbrains-mono": "^5.2.0",
+    "@grove-notes/manifest-schema": "^0.1.1"
+  }
+}

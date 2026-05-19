@@ -1,0 +1,60 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    devDependencies:
+      '@fontsource-variable/dm-sans':
+        specifier: ^5.2.0
+        version: 5.2.8
+      '@fontsource/cormorant-garamond':
+        specifier: ^5.2.0
+        version: 5.2.11
+      '@fontsource/jetbrains-mono':
+        specifier: ^5.2.0
+        version: 5.2.8
+      '@grove-notes/manifest-schema':
+        specifier: ^0.1.1
+        version: 0.1.1
+
+packages:
+
+  '@fontsource-variable/dm-sans@5.2.8':
+    resolution: {integrity: sha512-AxkvMTvNWgfrmlyjiV05vlHYJa+nRQCf1EfvIrQAPBpFJW0O9VTz7oAFr9S3lvbWdmnFoBk7yFqQL86u64nl2g==}
+
+  '@fontsource/cormorant-garamond@5.2.11':
+    resolution: {integrity: sha512-5JjpN023lhA5soijgVT0BdRGzmlijm402ppjccMd6h+vRE0mX2lJnE+41UPfnlidrkV9/rCo1mf58WZlHnB0CA==}
+
+  '@fontsource/jetbrains-mono@5.2.8':
+    resolution: {integrity: sha512-6w8/SG4kqvIMu7xd7wt6x3idn1Qux3p9N62s6G3rfldOUYHpWcc2FKrqf+Vo44jRvqWj2oAtTHrZXEP23oSKwQ==}
+
+  '@grove-notes/manifest-schema@0.1.1':
+    resolution: {integrity: sha512-9L8qIFbvbJ/xq8gYuNdjRsJcx8dNWfkrj93obac+FRtbWQUAB/LQwbhhA67M0Sb6w5Z23mm2oZ8JFeBVTpJMPw==}
+
+  valibot@0.42.1:
+    resolution: {integrity: sha512-3keXV29Ar5b//Hqi4MbSdV7lfVp6zuYLZuA9V1PvQUsXqogr+u5lvLPLk3A4f74VUXDnf/JfWMN6sB+koJ/FFw==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
+snapshots:
+
+  '@fontsource-variable/dm-sans@5.2.8': {}
+
+  '@fontsource/cormorant-garamond@5.2.11': {}
+
+  '@fontsource/jetbrains-mono@5.2.8': {}
+
+  '@grove-notes/manifest-schema@0.1.1':
+    dependencies:
+      valibot: 0.42.1
+    transitivePeerDependencies:
+      - typescript
+
+  valibot@0.42.1: {}

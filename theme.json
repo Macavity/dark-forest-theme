@@ -1,0 +1,21 @@
+{
+  "$schema": "https://unpkg.com/@grove-notes/manifest-schema@0/schemas/theme.schema.json",
+  "id": "dark-forest",
+  "name": {
+    "default": "Dark Forest",
+    "en": "Dark Forest",
+    "de": "Dunkler Wald"
+  },
+  "description": {
+    "default": "A moss-green dark forest theme for Grove with Cormorant Garamond display serif and dappled-light warm accents.",
+    "en": "A moss-green dark forest theme for Grove with Cormorant Garamond display serif and dappled-light warm accents.",
+    "de": "Ein moosgrünes Dunkelwald-Theme für Grove mit Cormorant-Garamond-Serife und warmen Lichtflecken-Akzenten."
+  },
+  "version": "0.1.0",
+  "author": "Alexander Pape",
+  "license": "MIT",
+  "minGroveVersion": "0.8.0",
+  "entry": "theme.css",
+  "modes": ["all"],
+  "keywords": ["dark", "forest", "moss", "serif", "warm", "nature"]
+}

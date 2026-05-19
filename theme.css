@@ -1,0 +1,244 @@
+/* ──────────────────────────────────────────────────────────────────────
+   DARK FOREST — Grove community theme
+   Moss green + dappled-light warm amber, Cormorant Garamond display serif,
+   DM Sans body, JetBrains Mono code. Single file covers light + dark via
+   the CSS `light-dark()` function.
+
+   id:       dark-forest
+   version:  0.1.0
+   author:   Alexander Pape
+   license:  MIT
+   ────────────────────────────────────────────────────────────────────── */
+
+/* ── Fonts ──────────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/cormorant-garamond-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/cormorant-garamond-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('fonts/cormorant-garamond-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/cormorant-garamond-italic-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url('fonts/cormorant-garamond-italic-600.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 100 1000;
+  font-display: swap;
+  src: url('fonts/dm-sans-variable.woff2') format('woff2-variations');
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/jetbrains-mono-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/jetbrains-mono-500.woff2') format('woff2');
+}
+
+/* ── Tokens ─────────────────────────────────────────────────────────── */
+
+:root {
+  color-scheme: light dark;
+
+  /* Backgrounds & surfaces */
+  --px-color-bg-body:        light-dark(#f4ede0, #0b1510);
+  --px-color-bg-frame:       light-dark(#ede5d3, #0e1c13);
+  --px-color-bg-elevated:    light-dark(#ffffff, #152018);
+  --px-color-bg-hover:       light-dark(#e6dec9, #192a1f);
+  --px-color-surface-0:      light-dark(#faf5e8, #111f16);
+  --px-color-surface-1:      light-dark(#ffffff, #152018);
+  --px-color-surface-3:      light-dark(#e6dec9, #192a1f);
+  --px-color-surface-hover:  light-dark(#e6dec9, #192a1f);
+  --px-color-surface-active: light-dark(#dcd2b8, #1d3024);
+
+  /* Borders */
+  --px-color-border:         light-dark(rgb(20 40 30 / 0.10), rgb(255 255 255 / 0.07));
+  --px-color-border-subtle:  light-dark(rgb(20 40 30 / 0.05), rgb(255 255 255 / 0.04));
+
+  /* Text */
+  --px-color-text-primary:     light-dark(#1a2e20, #ddd7c8);
+  --px-color-text-strong:      light-dark(#0e1f15, #f0e8d8);
+  --px-color-text-subtle:      light-dark(#4d6a52, #8aa388);
+  --px-color-text-muted:       light-dark(#5e7c63, #8aa388);
+  --px-color-text-placeholder: light-dark(#9eb0a2, #4d6952);
+  --px-color-text-on-accent:   light-dark(#f4ede0, #08120c);
+  --px-color-subtle:           light-dark(#4d6a52, #8aa388);
+
+  /* Selection */
+  --px-color-selection-bg: light-dark(rgb(47 122 77 / 0.22), rgb(78 168 114 / 0.30));
+
+  /* Accent / link / focus */
+  --px-color-accent:         light-dark(#2f7a4d, #4ea872);
+  --px-color-accent-hover:   light-dark(#235e3a, #6cc190);
+  --px-color-link:           light-dark(#2f7a4d, #4ea872);
+  --px-color-link-bg-hover:  light-dark(rgb(47 122 77 / 0.10), rgb(78 168 114 / 0.14));
+  --px-color-focus-ring:     light-dark(#2f7a4d, #6cc190);
+
+  /* Status — semantic colors preserved but shifted into the palette */
+  --px-color-success:     light-dark(#2f7a4d, #4ea872);
+  --px-color-warning:     light-dark(#8a5d2a, #c09a68);
+  --px-color-warning-bg:  light-dark(rgb(138 93 42 / 0.10), rgb(192 154 104 / 0.14));
+  --px-color-warning-fg:  light-dark(#8a5d2a, #c09a68);
+  --px-color-text-warning: light-dark(#8a5d2a, #c09a68);
+  --px-color-danger:      light-dark(#a83232, #e07070);
+  --px-color-error:       light-dark(#a83232, #e07070);
+
+  /* Editor heading hue distinctions — muted into moss/warm
+     Grove maps:  blue-7=h1, blue-6=h2, violet-7=h3, violet-3=h4,
+                  cyan-5=h5-h6, orange-6=bold, pink-7=italic,
+                  red-5=code, yellow-5=frontmatter, green-6=wikilinks */
+  --px-color-blue-7:    light-dark(#1f5e36, #6cc190);
+  --px-color-blue-6:    light-dark(#2f7a4d, #4ea872);
+  --px-color-violet-7:  light-dark(#8a5d2a, #c09a68);
+  --px-color-violet-3:  light-dark(#a7723a, #d4b58a);
+  --px-color-cyan-5:    light-dark(#4d6a52, #8aa388);
+  --px-color-orange-6:  light-dark(#8a5d2a, #c09a68);
+  --px-color-orange-5:  light-dark(#a7723a, #d4b58a);
+  --px-color-pink-7:    light-dark(#2f7a4d, #4ea872);
+  --px-color-red-5:     light-dark(#8a5d2a, #c09a68);
+  --px-color-red-7:     light-dark(#a83232, #e07070);
+  --px-color-yellow-5:  light-dark(#b08948, #d4b58a);
+  --px-color-green-6:   light-dark(#2f7a4d, #6cc190);
+
+  /* Dark-scale tokens (Grove uses these directly in some components) */
+  --px-color-dark-0: light-dark(#1a2e20, #ddd7c8);
+  --px-color-dark-1: light-dark(#2a3f30, #c2bba9);
+  --px-color-dark-2: light-dark(#4d6a52, #8aa388);
+  --px-color-dark-4: light-dark(#7c9580, #4d6952);
+  --px-color-dark-5: light-dark(#a8b8aa, #2f4231);
+  --px-color-dark-7: light-dark(#dcd2b8, #192a1f);
+  --px-color-dark-8: light-dark(#ede5d3, #0e1c13);
+
+  /* Typography — body, headings inherit via custom selectors below */
+  --px-font-family-sans:
+    'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --px-font-family-mono:
+    'JetBrains Mono', 'Fira Code', ui-monospace, 'SF Mono', Menlo, monospace;
+  --px-font-mono:
+    'JetBrains Mono', 'Fira Code', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Layout */
+  --px-card-radius: 0.875rem;
+  --px-radius-sm:   0.375rem;
+  --px-radius-md:   0.5rem;
+  --px-radius-lg:   0.875rem;
+  --px-radius-default: 0.5rem;
+
+  /* Shadow — softer in light mode, deeper in dark */
+  --px-shadow-card: light-dark(
+    0 8px 24px rgb(20 40 30 / 0.08),
+    0 24px 60px rgb(0 0 0 / 0.45)
+  );
+
+  /* Option palette — moss/warm-tinted versions of Grove's chip colors.
+     Keeps semantic categories but pulls them into the theme's hue space. */
+  --px-color-option-grey-bg:   light-dark(#e6dec9, #192a1f);
+  --px-color-option-grey-fg:   light-dark(#1a2e20, #ddd7c8);
+  --px-color-option-red-bg:    light-dark(#f3d6cf, #3f1f1d);
+  --px-color-option-red-fg:    light-dark(#8a3a2e, #e8a89a);
+  --px-color-option-orange-bg: light-dark(#f0deba, #3a2a18);
+  --px-color-option-orange-fg: light-dark(#8a5d2a, #d4b58a);
+  --px-color-option-yellow-bg: light-dark(#efe2b3, #3a3318);
+  --px-color-option-yellow-fg: light-dark(#7c5a1a, #d4c58a);
+  --px-color-option-green-bg:  light-dark(#d6e8d9, #1d3024);
+  --px-color-option-green-fg:  light-dark(#2f7a4d, #8ec99e);
+  --px-color-option-lime-bg:   light-dark(#dde6c5, #2c3318);
+  --px-color-option-lime-fg:   light-dark(#5c722e, #b8c98a);
+  --px-color-option-cyan-bg:   light-dark(#cee0d8, #1a2c28);
+  --px-color-option-cyan-fg:   light-dark(#3a6660, #8ec9bd);
+  --px-color-option-blue-bg:   light-dark(#cfdcd4, #1a2c24);
+  --px-color-option-blue-fg:   light-dark(#3a665a, #8ec9b0);
+  --px-color-option-violet-bg: light-dark(#dcd0d8, #2c1f28);
+  --px-color-option-violet-fg: light-dark(#665a66, #c4a8c0);
+  --px-color-option-pink-bg:   light-dark(#e8d6d8, #3a1f24);
+  --px-color-option-pink-fg:   light-dark(#8a3a4d, #e8a8b4);
+  --px-color-option-brown-bg:  light-dark(#e2d3bd, #2e2418);
+  --px-color-option-brown-fg:  light-dark(#7c4f1a, #d4b58a);
+  --px-color-option-black-bg:  light-dark(#1a2e20, #08120c);
+  --px-color-option-black-fg:  light-dark(#f4ede0, #ddd7c8);
+  --px-color-option-white-bg:  light-dark(#ffffff, #ddd7c8);
+  --px-color-option-white-fg:  light-dark(#1a2e20, #0e1c13);
+}
+
+/* ── Display serif on headings (UI + editor)
+   Grove's editor uses CodeMirror; ProseMirror powers some preview surfaces.
+   These selectors apply Cormorant Garamond wherever a heading is rendered
+   without disturbing layout. Missing selectors are harmless. ─────────── */
+
+h1, h2, h3, h4, h5, h6,
+.cm-header,
+.cm-header-1, .cm-header-2, .cm-header-3,
+.cm-header-4, .cm-header-5, .cm-header-6,
+.cm-line.cm-header-1, .cm-line.cm-header-2, .cm-line.cm-header-3,
+.cm-line.cm-header-4, .cm-line.cm-header-5, .cm-line.cm-header-6,
+.ProseMirror h1, .ProseMirror h2, .ProseMirror h3,
+.ProseMirror h4, .ProseMirror h5, .ProseMirror h6 {
+  font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  line-height: 1.15;
+}
+
+/* Italic emphasis renders in display-serif italic, accent-colored.
+   Matches the "Cherrymon" treatment in the reference screenshot. */
+.cm-line em,
+.cm-em,
+.ProseMirror em,
+.markdown-rendered em,
+.prose em,
+em {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* ── Per-scheme polish ─────────────────────────────────────────────── */
+
+/* Light: lighter accent shadow for a sunlit feel.
+   Dark:  richer accent glow under elevated surfaces. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --px-shadow-accent: 0 10px 32px rgb(78 168 114 / 0.22);
+  }
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --px-shadow-accent: 0 6px 18px rgb(47 122 77 / 0.18);
+  }
+}
