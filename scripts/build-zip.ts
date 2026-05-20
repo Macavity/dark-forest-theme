@@ -1,7 +1,8 @@
-// Produces dark-forest-<version>.zip from dist/ in the repo root.
-// The zip is what the marketplace install flow expects — theme.json at
-// the zip root, with the entry CSS and any referenced assets next to it.
-// Re-validates the manifest before zipping.
+// Produces package.zip from dist/ in the repo root. The marketplace
+// install flow expects a fixed `package.zip` filename — versioning is
+// carried by the GitHub release tag, not the asset name. Theme.json
+// sits at the zip root, with the entry CSS and any referenced assets
+// next to it. Re-validates the manifest before zipping.
 //
 // Requires the `zip` CLI (preinstalled on macOS / most Linux distros;
 // installable via `apt-get install zip` / `brew install zip`).
@@ -36,7 +37,8 @@ if (!existsSync(entry)) {
   process.exit(1);
 }
 
-const zipName = `${manifest.id}-${manifest.version}.zip`;
+// Fixed filename — the GitHub release tag carries the version.
+const zipName = 'package.zip';
 const zipPath = resolve(root, zipName);
 if (existsSync(zipPath)) rmSync(zipPath);
 

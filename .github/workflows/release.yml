@@ -57,11 +57,11 @@ jobs:
         run: bun run build:zip
 
       - name: Show zip contents
-        run: unzip -l dark-forest-*.zip
+        run: unzip -l package.zip
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
         with:
-          files: dark-forest-*.zip
+          files: package.zip
           generate_release_notes: true
           fail_on_unmatched_files: true

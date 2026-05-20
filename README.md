@@ -54,7 +54,7 @@ Theme sources (`theme.json`, `theme.css`, the scripts) are committed to git. `di
 | `fonts/*.woff2` | *Gitignored.* Latin subsets of Cormorant Garamond, DM Sans (variable), JetBrains Mono, copied out of the pinned `@fontsource` devDependencies on first build. |
 | `scripts/build.ts` | Validates `theme.json`, ensures `fonts/` exists, copies manifest + CSS + fonts into `dist/`. Hook point for minification. |
 | `scripts/build-fonts.ts` | Refreshes `fonts/` from `@fontsource`. Auto-invoked by `build.ts` when `fonts/` is empty; run it directly to refresh after bumping the `@fontsource/*` deps. |
-| `scripts/build-zip.ts` | Produces `dark-forest-<version>.zip` from `dist/` for GitHub releases |
+| `scripts/build-zip.ts` | Produces `package.zip` from `dist/` for GitHub releases |
 | `scripts/validate-manifest.ts` | Validates the root `theme.json` against the published manifest schema |
 | `scripts/install.ts` | Picks one of your registered workspaces and symlinks `dist/` into it |
 | `scripts/update-version.ts` | Interactive semver bump — keeps `theme.json` and `package.json` in sync |
@@ -73,7 +73,7 @@ git tag v0.2.0
 git push && git push --tags
 ```
 
-Pushing the tag triggers `.github/workflows/release.yml`, which re-installs deps, rebuilds `dist/`, zips it, and attaches `dark-forest-<version>.zip` to a new GitHub release. The marketplace install flow downloads from `github.com`, `codeload.github.com`, or `objects.githubusercontent.com` only, so a GitHub release asset is the simplest distribution channel.
+Pushing the tag triggers `.github/workflows/release.yml`, which re-installs deps, rebuilds `dist/`, zips it, and attaches `package.zip` to a new GitHub release. The marketplace install flow downloads from `github.com`, `codeload.github.com`, or `objects.githubusercontent.com` only, so a GitHub release asset is the simplest distribution channel.
 
 To build the zip locally without releasing:
 
@@ -81,7 +81,7 @@ To build the zip locally without releasing:
 bun install
 bun run validate           # check theme.json against the published schema
 bun run build              # populate dist/ (fonts + theme files)
-bun run build:zip          # produces dark-forest-<version>.zip at the repo root
+bun run build:zip          # produces package.zip at the repo root
 ```
 
 ## Requirements
