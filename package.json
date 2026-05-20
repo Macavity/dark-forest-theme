@@ -9,7 +9,6 @@
   "scripts": {
     "build": "bun run scripts/build.ts",
     "build:fonts": "bun run scripts/build-fonts.ts",
-    "build:theme": "bun run scripts/build-theme.ts",
     "build:zip": "bun run scripts/build-zip.ts",
     "validate": "bun run scripts/validate-manifest.ts",
     "install:theme": "bun run scripts/install.ts",

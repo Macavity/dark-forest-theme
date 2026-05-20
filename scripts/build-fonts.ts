@@ -1,14 +1,15 @@
-// Copies the specific .woff2 subsets we ship out of @fontsource packages
-// into ./dist/fonts/, with stable filenames that theme.css references.
-//
-// Run after `bun install`:  bun run build:fonts
+// Refreshes ./fonts/ from @fontsource packages. The fonts/ directory is
+// a committed source asset (like theme.json and theme.css) — this script
+// is what you run to scaffold it the first time or to bump font versions
+// after upgrading the @fontsource/* devDependencies. Day-to-day builds
+// don't need to run it; `bun run build` just copies fonts/ into dist/.
 import { copyFile, mkdir, access } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
-const fontsDir = resolve(root, 'dist', 'fonts');
+const fontsDir = resolve(root, 'fonts');
 const nm = resolve(root, 'node_modules');
 
 const copies: ReadonlyArray<readonly [string, string]> = [
@@ -49,4 +50,4 @@ if (missing.length) {
   process.exit(1);
 }
 
-console.log(`\nCopied ${copied} font files into dist/fonts/`);
+console.log(`\nCopied ${copied} font files into fonts/. Commit the diff if anything changed.`);
