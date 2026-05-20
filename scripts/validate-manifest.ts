@@ -7,7 +7,7 @@ import { parseThemeManifest } from '@grove-notes/manifest-schema';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const manifestPath = resolve(here, '..', 'dist', 'theme.json');
-const raw = JSON.parse(await readFile(manifestPath, 'utf-8'));
+const raw = JSON.parse(await readFile(manifestPath, 'utf-8')) as unknown;
 
 try {
   const ok = parseThemeManifest(raw);

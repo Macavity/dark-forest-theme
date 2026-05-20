@@ -7,15 +7,17 @@
   "author": "Alexander Pape",
   "type": "module",
   "scripts": {
-    "build:fonts": "node scripts/build-fonts.mjs",
-    "build:zip": "node scripts/build-zip.mjs",
-    "validate": "node scripts/validate-manifest.mjs",
-    "install:theme": "node scripts/install.mjs"
+    "build:fonts": "bun run scripts/build-fonts.ts",
+    "build:zip": "bun run scripts/build-zip.ts",
+    "validate": "bun run scripts/validate-manifest.ts",
+    "install:theme": "bun run scripts/install.ts",
+    "version:bump": "bun run scripts/update-version.ts"
   },
   "devDependencies": {
     "@fontsource-variable/dm-sans": "^5.2.0",
     "@fontsource/cormorant-garamond": "^5.2.0",
     "@fontsource/jetbrains-mono": "^5.2.0",
-    "@grove-notes/manifest-schema": "^0.1.1"
+    "@grove-notes/manifest-schema": "^0.1.1",
+    "@types/bun": "^1.3.0"
   }
 }

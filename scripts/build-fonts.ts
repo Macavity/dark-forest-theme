@@ -1,7 +1,7 @@
 // Copies the specific .woff2 subsets we ship out of @fontsource packages
-// into ./fonts/, with stable filenames that theme.css references.
+// into ./dist/fonts/, with stable filenames that theme.css references.
 //
-// Run after `pnpm install`:  pnpm run build:fonts
+// Run after `bun install`:  bun run build:fonts
 import { copyFile, mkdir, access } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -11,7 +11,7 @@ const root = resolve(here, '..');
 const fontsDir = resolve(root, 'dist', 'fonts');
 const nm = resolve(root, 'node_modules');
 
-const copies = [
+const copies: ReadonlyArray<readonly [string, string]> = [
   // Cormorant Garamond — display serif
   ['@fontsource/cormorant-garamond/files/cormorant-garamond-latin-400-normal.woff2', 'cormorant-garamond-400.woff2'],
   ['@fontsource/cormorant-garamond/files/cormorant-garamond-latin-500-normal.woff2', 'cormorant-garamond-500.woff2'],
@@ -28,7 +28,7 @@ const copies = [
 await mkdir(fontsDir, { recursive: true });
 
 let copied = 0;
-const missing = [];
+const missing: string[] = [];
 for (const [from, to] of copies) {
   const src = resolve(nm, from);
   const dst = resolve(fontsDir, to);
@@ -44,7 +44,7 @@ for (const [from, to] of copies) {
 }
 
 if (missing.length) {
-  console.error('\nMissing source files — run `pnpm install` first:');
+  console.error('\nMissing source files — run `bun install` first:');
   for (const m of missing) console.error(`  ${m}`);
   process.exit(1);
 }

@@ -13,8 +13,20 @@ import { existsSync, readFileSync, lstatSync, rmSync, mkdirSync, symlinkSync } f
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { homedir, platform } from 'node:os';
-import { createInterface } from 'node:readline/promises';
-import { stdin, stdout } from 'node:process';
+
+interface Workspace {
+  id: string;
+  path: string;
+  name: string;
+  icon?: string;
+  lastOpened?: number;
+}
+
+interface CliArgs {
+  workspace: string | null;
+  force: boolean;
+  api: string | null;
+}
 
 const here = dirname(fileURLToPath(import.meta.url));
 // Symlink only `dist/` — the dev repo root has node_modules, scripts,
@@ -23,42 +35,48 @@ const here = dirname(fileURLToPath(import.meta.url));
 const themeRoot = resolve(here, '..', 'dist');
 const themeId = 'dark-forest';
 
-function userDataDir() {
+function userDataDir(): string {
   const home = homedir();
   switch (platform()) {
     case 'darwin':
       return join(home, 'Library', 'Application Support', 'Grove');
     case 'win32':
-      return join(process.env.APPDATA || join(home, 'AppData', 'Roaming'), 'Grove');
+      return join(process.env.APPDATA ?? join(home, 'AppData', 'Roaming'), 'Grove');
     default:
-      return join(process.env.XDG_CONFIG_HOME || join(home, '.config'), 'Grove');
+      return join(process.env.XDG_CONFIG_HOME ?? join(home, '.config'), 'Grove');
   }
 }
 
-function readWorkspacesFromFile() {
+function isWorkspace(value: unknown): value is Workspace {
+  if (!value || typeof value !== 'object') return false;
+  const w = value as Record<string, unknown>;
+  return typeof w.id === 'string' && typeof w.path === 'string' && typeof w.name === 'string';
+}
+
+function readWorkspacesFromFile(): Workspace[] {
   const file = join(userDataDir(), 'recent-workspaces.json');
   if (!existsSync(file)) {
     console.error(`No Grove workspace registry found at:\n  ${file}\n`);
     console.error('Open a workspace in Grove at least once, then try again.');
     process.exit(1);
   }
-  let parsed;
   try {
-    parsed = JSON.parse(readFileSync(file, 'utf-8'));
+    const parsed = JSON.parse(readFileSync(file, 'utf-8')) as unknown;
+    if (!Array.isArray(parsed)) throw new Error('expected an array');
+    return parsed.filter(isWorkspace).filter((w) => existsSync(w.path));
   } catch (err) {
-    console.error(`Could not parse ${file}: ${err.message}`);
+    console.error(`Could not parse ${file}: ${err instanceof Error ? err.message : err}`);
     process.exit(1);
   }
-  return parsed.filter((w) => w && typeof w.path === 'string' && existsSync(w.path));
 }
 
-async function readWorkspacesFromApi(baseUrl) {
+async function readWorkspacesFromApi(baseUrl: string): Promise<Workspace[]> {
   const url = baseUrl.replace(/\/$/, '') + '/api/workspaces/recent';
-  let res;
+  let res: Response;
   try {
     res = await fetch(url, { signal: AbortSignal.timeout(2000) });
   } catch (err) {
-    console.error(`Could not reach Grove API at ${url}: ${err.message}`);
+    console.error(`Could not reach Grove API at ${url}: ${err instanceof Error ? err.message : err}`);
     console.error('Is Grove running on that port?');
     process.exit(1);
   }
@@ -66,25 +84,25 @@ async function readWorkspacesFromApi(baseUrl) {
     console.error(`Grove API returned ${res.status} ${res.statusText}`);
     process.exit(1);
   }
-  const body = await res.json();
-  const list = Array.isArray(body) ? body : body.workspaces;
+  const body = (await res.json()) as unknown;
+  const list = Array.isArray(body) ? body : (body as { workspaces?: unknown }).workspaces;
   if (!Array.isArray(list)) {
     console.error('Unexpected response shape from Grove API.');
     process.exit(1);
   }
-  return list.filter((w) => w && typeof w.path === 'string' && existsSync(w.path));
+  return list.filter(isWorkspace).filter((w) => existsSync(w.path));
 }
 
-function parseArgs(argv) {
-  const args = { workspace: null, force: false, api: process.env.GROVE_API_URL || null };
+function parseArgs(argv: string[]): CliArgs {
+  const args: CliArgs = { workspace: null, force: false, api: process.env.GROVE_API_URL ?? null };
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--force' || a === '-f') args.force = true;
-    else if (a === '--workspace' || a === '-w') args.workspace = argv[++i];
-    else if (a === '--api') args.api = argv[++i];
+    else if (a === '--workspace' || a === '-w') args.workspace = argv[++i] ?? null;
+    else if (a === '--api') args.api = argv[++i] ?? null;
     else if (a === '--help' || a === '-h') {
       console.log(
-        `Usage: pnpm run install:theme [--workspace <name|path|id>] [--api <url>] [--force]\n` +
+        `Usage: bun run install:theme [--workspace <name|path|id>] [--api <url>] [--force]\n` +
           `  --api          query a running Grove (e.g. http://127.0.0.1:60557).\n` +
           `                 Also honoured via GROVE_API_URL. Defaults to reading\n` +
           `                 recent-workspaces.json from the user data dir.`,
@@ -95,24 +113,22 @@ function parseArgs(argv) {
   return args;
 }
 
-function pickWorkspaceByQuery(workspaces, q) {
+function pickWorkspaceByQuery(workspaces: Workspace[], q: string): Workspace | undefined {
   return workspaces.find(
     (w) => w.id === q || w.path === q || w.name === q || w.path.endsWith(q),
   );
 }
 
-async function promptChoice(workspaces) {
-  const rl = createInterface({ input: stdin, output: stdout });
+function promptChoice(workspaces: Workspace[]): Workspace {
   console.log('\nRegistered Grove workspaces:\n');
   workspaces.forEach((w, i) => {
     const idx = String(i + 1).padStart(2, ' ');
-    console.log(`  ${idx}.  ${w.icon || '·'}  ${w.name}`);
+    console.log(`  ${idx}.  ${w.icon ?? '·'}  ${w.name}`);
     console.log(`        ${w.path}`);
   });
   console.log('');
-  const answer = await rl.question(`Install Dark Forest into [1-${workspaces.length}] (q to cancel): `);
-  rl.close();
-  const t = answer.trim().toLowerCase();
+  const answer = prompt(`Install Dark Forest into [1-${workspaces.length}] (q to cancel):`);
+  const t = (answer ?? '').trim().toLowerCase();
   if (t === 'q' || t === '') {
     console.log('Cancelled.');
     process.exit(0);
@@ -122,14 +138,12 @@ async function promptChoice(workspaces) {
     console.error(`Not a valid choice: ${answer}`);
     process.exit(1);
   }
-  return workspaces[n - 1];
+  return workspaces[n - 1]!;
 }
 
-async function confirmOverwrite(target) {
-  const rl = createInterface({ input: stdin, output: stdout });
-  const answer = await rl.question(`  ${target} already exists. Replace? [y/N]: `);
-  rl.close();
-  return answer.trim().toLowerCase().startsWith('y');
+function confirmOverwrite(target: string): boolean {
+  const answer = prompt(`  ${target} already exists. Replace? [y/N]:`);
+  return (answer ?? '').trim().toLowerCase().startsWith('y');
 }
 
 const args = parseArgs(process.argv);
@@ -137,11 +151,11 @@ const workspaces = args.api
   ? await readWorkspacesFromApi(args.api)
   : readWorkspacesFromFile();
 if (workspaces.length === 0) {
-  console.error('No reachable workspaces in Grove\'s recent list.');
+  console.error("No reachable workspaces in Grove's recent list.");
   process.exit(1);
 }
 
-let chosen;
+let chosen: Workspace | undefined;
 if (args.workspace) {
   chosen = pickWorkspaceByQuery(workspaces, args.workspace);
   if (!chosen) {
@@ -151,7 +165,7 @@ if (args.workspace) {
     process.exit(1);
   }
 } else {
-  chosen = await promptChoice(workspaces);
+  chosen = promptChoice(workspaces);
 }
 
 const themesDir = join(chosen.path, '.grove', 'themes');
@@ -165,15 +179,14 @@ let occupied = false;
 try {
   lstatSync(target);
   occupied = true;
-} catch {}
+} catch {
+  // not present — nothing to clear
+}
 
 if (occupied) {
-  if (!args.force) {
-    const ok = await confirmOverwrite(target);
-    if (!ok) {
-      console.log('Cancelled.');
-      process.exit(0);
-    }
+  if (!args.force && !confirmOverwrite(target)) {
+    console.log('Cancelled.');
+    process.exit(0);
   }
   rmSync(target, { recursive: true, force: true });
 }
