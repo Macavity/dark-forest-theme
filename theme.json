@@ -11,11 +11,20 @@
     "en": "A moss-green dark forest theme with Cormorant Garamond display serif and dappled-light warm accents.",
     "de": "Ein moosgrünes Dunkelwald-Theme mit Cormorant-Garamond-Serife und warmen Lichtflecken-Akzenten."
   },
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "Alexander Pape",
   "license": "MIT",
   "minGroveVersion": "0.8.0",
   "entry": "theme.css",
-  "modes": ["all"],
-  "keywords": ["dark", "forest", "moss", "serif", "warm", "nature"]
+  "modes": [
+    "all"
+  ],
+  "keywords": [
+    "dark",
+    "forest",
+    "moss",
+    "serif",
+    "warm",
+    "nature"
+  ]
 }
