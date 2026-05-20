@@ -1,8 +1,8 @@
-// Refreshes ./fonts/ from @fontsource packages. The fonts/ directory is
-// a committed source asset (like theme.json and theme.css) — this script
-// is what you run to scaffold it the first time or to bump font versions
-// after upgrading the @fontsource/* devDependencies. Day-to-day builds
-// don't need to run it; `bun run build` just copies fonts/ into dist/.
+// Populates ./fonts/ from the @fontsource packages in node_modules.
+// Day-to-day you don't run this directly: `bun run build` invokes it
+// automatically when fonts/ is empty. Run it manually to refresh after
+// bumping the @fontsource/* devDependencies — the next build will pick
+// up the new woff2 files.
 import { copyFile, mkdir, access } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -50,4 +50,4 @@ if (missing.length) {
   process.exit(1);
 }
 
-console.log(`\nCopied ${copied} font files into fonts/. Commit the diff if anything changed.`);
+console.log(`\nCopied ${copied} font files into fonts/.`);

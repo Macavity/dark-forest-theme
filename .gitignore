@@ -3,6 +3,9 @@ node_modules/
 *.log
 .pnpm-store/
 
+# Fonts — fetched from @fontsource on first build, treated as a build artifact.
+fonts/
+
 # Build output — populated by `bun run build` (fonts + theme files).
 dist/
 
