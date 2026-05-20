@@ -16,7 +16,7 @@ const root = resolve(here, '..');
 const distDir = resolve(root, 'dist');
 
 if (!existsSync(distDir)) {
-  console.error('dist/ does not exist. Run `bun install && bun run build:fonts` first.');
+  console.error('dist/ does not exist. Run `bun run build` first.');
   process.exit(1);
 }
 

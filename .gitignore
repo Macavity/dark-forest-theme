@@ -3,5 +3,8 @@ node_modules/
 *.log
 .pnpm-store/
 
-# Release artifacts — built by `pnpm run build:zip`, uploaded to GitHub releases.
+# Build output — populated by `bun run build` (fonts + theme files).
+dist/
+
+# Release artifacts — built by `bun run build:zip`, uploaded to GitHub releases.
 dark-forest-*.zip

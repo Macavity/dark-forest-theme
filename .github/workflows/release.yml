@@ -37,21 +37,21 @@ jobs:
             TAG="${{ github.event.inputs.tag }}"
             TAG="${TAG#v}"
           fi
-          MANIFEST_VERSION="$(jq -r .version dist/theme.json)"
+          MANIFEST_VERSION="$(jq -r .version theme.json)"
           PACKAGE_VERSION="$(jq -r .version package.json)"
           echo "Tag (without v):     $TAG"
-          echo "dist/theme.json:     $MANIFEST_VERSION"
+          echo "theme.json:          $MANIFEST_VERSION"
           echo "package.json:        $PACKAGE_VERSION"
           if [ "$TAG" != "$MANIFEST_VERSION" ] || [ "$TAG" != "$PACKAGE_VERSION" ]; then
             echo "::error::Tag and manifest versions disagree. Run \`bun run version:bump\` and re-tag."
             exit 1
           fi
 
-      - name: Build font subsets
-        run: bun run build:fonts
-
       - name: Validate manifest against schema
         run: bun run validate
+
+      - name: Build dist/
+        run: bun run build
 
       - name: Build zip
         run: bun run build:zip

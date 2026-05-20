@@ -147,6 +147,12 @@ function confirmOverwrite(target: string): boolean {
 }
 
 const args = parseArgs(process.argv);
+
+if (!existsSync(themeRoot)) {
+  console.error('dist/ does not exist. Run `bun run build` first.');
+  process.exit(1);
+}
+
 const workspaces = args.api
   ? await readWorkspacesFromApi(args.api)
   : readWorkspacesFromFile();
