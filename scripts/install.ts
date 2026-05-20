@@ -1,9 +1,9 @@
-// Symlinks this theme into one of Grove's registered workspaces.
+// Symlinks this theme into one of the host app's registered workspaces.
 //
-// By default reads Grove's `recent-workspaces.json` (the same file the
+// By default reads the host's `recent-workspaces.json` (the same file the
 // desktop app uses to populate its workspace dropdown). Pass
-// `--api <url>` (or set GROVE_API_URL) to instead query a running Grove
-// instance's `/api/workspaces/recent` endpoint.
+// `--api <url>` (or set WORKSPACE_API_URL) to instead query a running
+// host's `/api/workspaces/recent` endpoint.
 //
 // Other flags:
 //   --workspace <name|path|id>   skip the prompt and link straight in
@@ -30,7 +30,7 @@ interface CliArgs {
 
 const here = dirname(fileURLToPath(import.meta.url));
 // Symlink only `dist/` — the dev repo root has node_modules, scripts,
-// package.json, etc. that Grove would otherwise serve via its static
+// package.json, etc. that the host would otherwise serve via its static
 // theme mount as application/octet-stream.
 const themeRoot = resolve(here, '..', 'dist');
 const themeId = 'dark-forest';
@@ -56,8 +56,8 @@ function isWorkspace(value: unknown): value is Workspace {
 function readWorkspacesFromFile(): Workspace[] {
   const file = join(userDataDir(), 'recent-workspaces.json');
   if (!existsSync(file)) {
-    console.error(`No Grove workspace registry found at:\n  ${file}\n`);
-    console.error('Open a workspace in Grove at least once, then try again.');
+    console.error(`No workspace registry found at:\n  ${file}\n`);
+    console.error('Open a workspace in the host app at least once, then try again.');
     process.exit(1);
   }
   try {
@@ -76,25 +76,25 @@ async function readWorkspacesFromApi(baseUrl: string): Promise<Workspace[]> {
   try {
     res = await fetch(url, { signal: AbortSignal.timeout(2000) });
   } catch (err) {
-    console.error(`Could not reach Grove API at ${url}: ${err instanceof Error ? err.message : err}`);
-    console.error('Is Grove running on that port?');
+    console.error(`Could not reach the API at ${url}: ${err instanceof Error ? err.message : err}`);
+    console.error('Is the host app running on that port?');
     process.exit(1);
   }
   if (!res.ok) {
-    console.error(`Grove API returned ${res.status} ${res.statusText}`);
+    console.error(`API returned ${res.status} ${res.statusText}`);
     process.exit(1);
   }
   const body = (await res.json()) as unknown;
   const list = Array.isArray(body) ? body : (body as { workspaces?: unknown }).workspaces;
   if (!Array.isArray(list)) {
-    console.error('Unexpected response shape from Grove API.');
+    console.error('Unexpected response shape from the API.');
     process.exit(1);
   }
   return list.filter(isWorkspace).filter((w) => existsSync(w.path));
 }
 
 function parseArgs(argv: string[]): CliArgs {
-  const args: CliArgs = { workspace: null, force: false, api: process.env.GROVE_API_URL ?? null };
+  const args: CliArgs = { workspace: null, force: false, api: process.env.WORKSPACE_API_URL ?? null };
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--force' || a === '-f') args.force = true;
@@ -103,8 +103,8 @@ function parseArgs(argv: string[]): CliArgs {
     else if (a === '--help' || a === '-h') {
       console.log(
         `Usage: bun run install:theme [--workspace <name|path|id>] [--api <url>] [--force]\n` +
-          `  --api          query a running Grove (e.g. http://127.0.0.1:60557).\n` +
-          `                 Also honoured via GROVE_API_URL. Defaults to reading\n` +
+          `  --api          query a running host app (e.g. http://127.0.0.1:60557).\n` +
+          `                 Also honoured via WORKSPACE_API_URL. Defaults to reading\n` +
           `                 recent-workspaces.json from the user data dir.`,
       );
       process.exit(0);
@@ -120,7 +120,7 @@ function pickWorkspaceByQuery(workspaces: Workspace[], q: string): Workspace | u
 }
 
 function promptChoice(workspaces: Workspace[]): Workspace {
-  console.log('\nRegistered Grove workspaces:\n');
+  console.log('\nRegistered workspaces:\n');
   workspaces.forEach((w, i) => {
     const idx = String(i + 1).padStart(2, ' ');
     console.log(`  ${idx}.  ${w.icon ?? '·'}  ${w.name}`);
@@ -151,7 +151,7 @@ const workspaces = args.api
   ? await readWorkspacesFromApi(args.api)
   : readWorkspacesFromFile();
 if (workspaces.length === 0) {
-  console.error("No reachable workspaces in Grove's recent list.");
+  console.error('No reachable workspaces in the recent list.');
   process.exit(1);
 }
 
@@ -195,4 +195,4 @@ symlinkSync(themeRoot, target, 'dir');
 
 console.log(`\nLinked: ${target}`);
 console.log(`     →  ${themeRoot}`);
-console.log(`\nOpen "${chosen.name}" in Grove → Settings → Marketplace → Themes → Dark Forest.`);
+console.log(`\nOpen "${chosen.name}" → Settings → Marketplace → Themes → Dark Forest.`);

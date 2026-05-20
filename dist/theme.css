@@ -1,5 +1,5 @@
 /* ──────────────────────────────────────────────────────────────────────
-   DARK FOREST — Grove community theme
+   DARK FOREST
    Moss green + dappled-light warm amber, Cormorant Garamond display serif,
    DM Sans body, JetBrains Mono code. Single file covers light + dark via
    the CSS `light-dark()` function.
@@ -119,10 +119,11 @@
   --grove-color-danger:      light-dark(#a83232, #e07070);
   --grove-color-error:       light-dark(#a83232, #e07070);
 
-  /* Editor heading hue distinctions — muted into moss/warm
-     Grove maps:  blue-7=h1, blue-6=h2, violet-7=h3, violet-3=h4,
-                  cyan-5=h5-h6, orange-6=bold, pink-7=italic,
-                  red-5=code, yellow-5=frontmatter, green-6=wikilinks */
+  /* Editor heading hue distinctions — muted into moss/warm.
+     Token map used by the editor:
+       blue-7=h1, blue-6=h2, violet-7=h3, violet-3=h4,
+       cyan-5=h5-h6, orange-6=bold, pink-7=italic,
+       red-5=code, yellow-5=frontmatter, green-6=wikilinks */
   --grove-color-blue-7:    light-dark(#1f5e36, #6cc190);
   --grove-color-blue-6:    light-dark(#2f7a4d, #4ea872);
   --grove-color-violet-7:  light-dark(#8a5d2a, #c09a68);
@@ -136,7 +137,7 @@
   --grove-color-yellow-5:  light-dark(#b08948, #d4b58a);
   --grove-color-green-6:   light-dark(#2f7a4d, #6cc190);
 
-  /* Dark-scale tokens (Grove uses these directly in some components) */
+  /* Dark-scale tokens (referenced directly by some components) */
   --grove-color-dark-0: light-dark(#1a2e20, #ddd7c8);
   --grove-color-dark-1: light-dark(#2a3f30, #c2bba9);
   --grove-color-dark-2: light-dark(#4d6a52, #8aa388);
@@ -166,7 +167,7 @@
     0 24px 60px rgb(0 0 0 / 0.45)
   );
 
-  /* Option palette — moss/warm-tinted versions of Grove's chip colors.
+  /* Option palette — moss/warm-tinted chip colors.
      Keeps semantic categories but pulls them into the theme's hue space. */
   --grove-color-option-grey-bg:   light-dark(#e6dec9, #192a1f);
   --grove-color-option-grey-fg:   light-dark(#1a2e20, #ddd7c8);
@@ -197,7 +198,7 @@
 }
 
 /* ── Display serif on headings (UI + editor)
-   Grove's editor uses CodeMirror; ProseMirror powers some preview surfaces.
+   The editor uses CodeMirror; ProseMirror powers some preview surfaces.
    These selectors apply Cormorant Garamond wherever a heading is rendered
    without disturbing layout. Missing selectors are harmless. ─────────── */
 

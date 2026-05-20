@@ -1,4 +1,4 @@
-// Parses theme.json against @grove-notes/manifest-schema and prints the
+// Parses theme.json against the published manifest schema and prints the
 // validated, normalized form. Exits non-zero on validation failure.
 import { readFile } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';

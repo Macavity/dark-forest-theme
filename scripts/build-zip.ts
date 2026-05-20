@@ -1,7 +1,7 @@
 // Produces dark-forest-<version>.zip from dist/ in the repo root.
-// The zip is what Grove's marketplace install flow expects — theme.json
-// at the zip root, with the entry CSS and any referenced assets next
-// to it. Re-validates the manifest before zipping.
+// The zip is what the marketplace install flow expects — theme.json at
+// the zip root, with the entry CSS and any referenced assets next to it.
+// Re-validates the manifest before zipping.
 //
 // Requires the `zip` CLI (preinstalled on macOS / most Linux distros;
 // installable via `apt-get install zip` / `brew install zip`).

@@ -1,8 +1,8 @@
 {
-  "name": "@dark-forest/grove-theme",
+  "name": "@dark-forest-theme",
   "version": "0.1.0",
   "private": true,
-  "description": "A moss-green dark forest theme for Grove.",
+  "description": "A moss-green dark forest theme.",
   "license": "MIT",
   "author": "Alexander Pape",
   "type": "module",
