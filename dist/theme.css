@@ -77,123 +77,123 @@
   color-scheme: light dark;
 
   /* Backgrounds & surfaces */
-  --px-color-bg-body:        light-dark(#f4ede0, #0b1510);
-  --px-color-bg-frame:       light-dark(#ede5d3, #0e1c13);
-  --px-color-bg-elevated:    light-dark(#ffffff, #152018);
-  --px-color-bg-hover:       light-dark(#e6dec9, #192a1f);
-  --px-color-surface-0:      light-dark(#faf5e8, #111f16);
-  --px-color-surface-1:      light-dark(#ffffff, #152018);
-  --px-color-surface-3:      light-dark(#e6dec9, #192a1f);
-  --px-color-surface-hover:  light-dark(#e6dec9, #192a1f);
-  --px-color-surface-active: light-dark(#dcd2b8, #1d3024);
+  --grove-color-bg-body:        light-dark(#f4ede0, #0b1510);
+  --grove-color-bg-frame:       light-dark(#ede5d3, #0e1c13);
+  --grove-color-bg-elevated:    light-dark(#ffffff, #152018);
+  --grove-color-bg-hover:       light-dark(#e6dec9, #192a1f);
+  --grove-color-surface-0:      light-dark(#faf5e8, #111f16);
+  --grove-color-surface-1:      light-dark(#ffffff, #152018);
+  --grove-color-surface-3:      light-dark(#e6dec9, #192a1f);
+  --grove-color-surface-hover:  light-dark(#e6dec9, #192a1f);
+  --grove-color-surface-active: light-dark(#dcd2b8, #1d3024);
 
   /* Borders */
-  --px-color-border:         light-dark(rgb(20 40 30 / 0.10), rgb(255 255 255 / 0.07));
-  --px-color-border-subtle:  light-dark(rgb(20 40 30 / 0.05), rgb(255 255 255 / 0.04));
+  --grove-color-border:         light-dark(rgb(20 40 30 / 0.10), rgb(255 255 255 / 0.07));
+  --grove-color-border-subtle:  light-dark(rgb(20 40 30 / 0.05), rgb(255 255 255 / 0.04));
 
   /* Text */
-  --px-color-text-primary:     light-dark(#1a2e20, #ddd7c8);
-  --px-color-text-strong:      light-dark(#0e1f15, #f0e8d8);
-  --px-color-text-subtle:      light-dark(#4d6a52, #8aa388);
-  --px-color-text-muted:       light-dark(#5e7c63, #8aa388);
-  --px-color-text-placeholder: light-dark(#9eb0a2, #4d6952);
-  --px-color-text-on-accent:   light-dark(#f4ede0, #08120c);
-  --px-color-subtle:           light-dark(#4d6a52, #8aa388);
+  --grove-color-text-primary:     light-dark(#1a2e20, #ddd7c8);
+  --grove-color-text-strong:      light-dark(#0e1f15, #f0e8d8);
+  --grove-color-text-subtle:      light-dark(#4d6a52, #8aa388);
+  --grove-color-text-muted:       light-dark(#5e7c63, #8aa388);
+  --grove-color-text-placeholder: light-dark(#9eb0a2, #4d6952);
+  --grove-color-text-on-accent:   light-dark(#f4ede0, #08120c);
+  --grove-color-subtle:           light-dark(#4d6a52, #8aa388);
 
   /* Selection */
-  --px-color-selection-bg: light-dark(rgb(47 122 77 / 0.22), rgb(78 168 114 / 0.30));
+  --grove-color-selection-bg: light-dark(rgb(47 122 77 / 0.22), rgb(78 168 114 / 0.30));
 
   /* Accent / link / focus */
-  --px-color-accent:         light-dark(#2f7a4d, #4ea872);
-  --px-color-accent-hover:   light-dark(#235e3a, #6cc190);
-  --px-color-link:           light-dark(#2f7a4d, #4ea872);
-  --px-color-link-bg-hover:  light-dark(rgb(47 122 77 / 0.10), rgb(78 168 114 / 0.14));
-  --px-color-focus-ring:     light-dark(#2f7a4d, #6cc190);
+  --grove-color-accent:         light-dark(#2f7a4d, #4ea872);
+  --grove-color-accent-hover:   light-dark(#235e3a, #6cc190);
+  --grove-color-link:           light-dark(#2f7a4d, #4ea872);
+  --grove-color-link-bg-hover:  light-dark(rgb(47 122 77 / 0.10), rgb(78 168 114 / 0.14));
+  --grove-color-focus-ring:     light-dark(#2f7a4d, #6cc190);
 
   /* Status — semantic colors preserved but shifted into the palette */
-  --px-color-success:     light-dark(#2f7a4d, #4ea872);
-  --px-color-warning:     light-dark(#8a5d2a, #c09a68);
-  --px-color-warning-bg:  light-dark(rgb(138 93 42 / 0.10), rgb(192 154 104 / 0.14));
-  --px-color-warning-fg:  light-dark(#8a5d2a, #c09a68);
-  --px-color-text-warning: light-dark(#8a5d2a, #c09a68);
-  --px-color-danger:      light-dark(#a83232, #e07070);
-  --px-color-error:       light-dark(#a83232, #e07070);
+  --grove-color-success:     light-dark(#2f7a4d, #4ea872);
+  --grove-color-warning:     light-dark(#8a5d2a, #c09a68);
+  --grove-color-warning-bg:  light-dark(rgb(138 93 42 / 0.10), rgb(192 154 104 / 0.14));
+  --grove-color-warning-fg:  light-dark(#8a5d2a, #c09a68);
+  --grove-color-text-warning: light-dark(#8a5d2a, #c09a68);
+  --grove-color-danger:      light-dark(#a83232, #e07070);
+  --grove-color-error:       light-dark(#a83232, #e07070);
 
   /* Editor heading hue distinctions — muted into moss/warm
      Grove maps:  blue-7=h1, blue-6=h2, violet-7=h3, violet-3=h4,
                   cyan-5=h5-h6, orange-6=bold, pink-7=italic,
                   red-5=code, yellow-5=frontmatter, green-6=wikilinks */
-  --px-color-blue-7:    light-dark(#1f5e36, #6cc190);
-  --px-color-blue-6:    light-dark(#2f7a4d, #4ea872);
-  --px-color-violet-7:  light-dark(#8a5d2a, #c09a68);
-  --px-color-violet-3:  light-dark(#a7723a, #d4b58a);
-  --px-color-cyan-5:    light-dark(#4d6a52, #8aa388);
-  --px-color-orange-6:  light-dark(#8a5d2a, #c09a68);
-  --px-color-orange-5:  light-dark(#a7723a, #d4b58a);
-  --px-color-pink-7:    light-dark(#2f7a4d, #4ea872);
-  --px-color-red-5:     light-dark(#8a5d2a, #c09a68);
-  --px-color-red-7:     light-dark(#a83232, #e07070);
-  --px-color-yellow-5:  light-dark(#b08948, #d4b58a);
-  --px-color-green-6:   light-dark(#2f7a4d, #6cc190);
+  --grove-color-blue-7:    light-dark(#1f5e36, #6cc190);
+  --grove-color-blue-6:    light-dark(#2f7a4d, #4ea872);
+  --grove-color-violet-7:  light-dark(#8a5d2a, #c09a68);
+  --grove-color-violet-3:  light-dark(#a7723a, #d4b58a);
+  --grove-color-cyan-5:    light-dark(#4d6a52, #8aa388);
+  --grove-color-orange-6:  light-dark(#8a5d2a, #c09a68);
+  --grove-color-orange-5:  light-dark(#a7723a, #d4b58a);
+  --grove-color-pink-7:    light-dark(#2f7a4d, #4ea872);
+  --grove-color-red-5:     light-dark(#8a5d2a, #c09a68);
+  --grove-color-red-7:     light-dark(#a83232, #e07070);
+  --grove-color-yellow-5:  light-dark(#b08948, #d4b58a);
+  --grove-color-green-6:   light-dark(#2f7a4d, #6cc190);
 
   /* Dark-scale tokens (Grove uses these directly in some components) */
-  --px-color-dark-0: light-dark(#1a2e20, #ddd7c8);
-  --px-color-dark-1: light-dark(#2a3f30, #c2bba9);
-  --px-color-dark-2: light-dark(#4d6a52, #8aa388);
-  --px-color-dark-4: light-dark(#7c9580, #4d6952);
-  --px-color-dark-5: light-dark(#a8b8aa, #2f4231);
-  --px-color-dark-7: light-dark(#dcd2b8, #192a1f);
-  --px-color-dark-8: light-dark(#ede5d3, #0e1c13);
+  --grove-color-dark-0: light-dark(#1a2e20, #ddd7c8);
+  --grove-color-dark-1: light-dark(#2a3f30, #c2bba9);
+  --grove-color-dark-2: light-dark(#4d6a52, #8aa388);
+  --grove-color-dark-4: light-dark(#7c9580, #4d6952);
+  --grove-color-dark-5: light-dark(#a8b8aa, #2f4231);
+  --grove-color-dark-7: light-dark(#dcd2b8, #192a1f);
+  --grove-color-dark-8: light-dark(#ede5d3, #0e1c13);
 
   /* Typography — body, headings inherit via custom selectors below */
-  --px-font-family-sans:
+  --grove-font-family-sans:
     'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-  --px-font-family-mono:
+  --grove-font-family-mono:
     'JetBrains Mono', 'Fira Code', ui-monospace, 'SF Mono', Menlo, monospace;
-  --px-font-mono:
+  --grove-font-mono:
     'JetBrains Mono', 'Fira Code', ui-monospace, 'SF Mono', Menlo, monospace;
 
   /* Layout */
-  --px-card-radius: 0.875rem;
-  --px-radius-sm:   0.375rem;
-  --px-radius-md:   0.5rem;
-  --px-radius-lg:   0.875rem;
-  --px-radius-default: 0.5rem;
+  --grove-card-radius: 0.875rem;
+  --grove-radius-sm:   0.375rem;
+  --grove-radius-md:   0.5rem;
+  --grove-radius-lg:   0.875rem;
+  --grove-radius-default: 0.5rem;
 
   /* Shadow — softer in light mode, deeper in dark */
-  --px-shadow-card: light-dark(
+  --grove-shadow-card: light-dark(
     0 8px 24px rgb(20 40 30 / 0.08),
     0 24px 60px rgb(0 0 0 / 0.45)
   );
 
   /* Option palette — moss/warm-tinted versions of Grove's chip colors.
      Keeps semantic categories but pulls them into the theme's hue space. */
-  --px-color-option-grey-bg:   light-dark(#e6dec9, #192a1f);
-  --px-color-option-grey-fg:   light-dark(#1a2e20, #ddd7c8);
-  --px-color-option-red-bg:    light-dark(#f3d6cf, #3f1f1d);
-  --px-color-option-red-fg:    light-dark(#8a3a2e, #e8a89a);
-  --px-color-option-orange-bg: light-dark(#f0deba, #3a2a18);
-  --px-color-option-orange-fg: light-dark(#8a5d2a, #d4b58a);
-  --px-color-option-yellow-bg: light-dark(#efe2b3, #3a3318);
-  --px-color-option-yellow-fg: light-dark(#7c5a1a, #d4c58a);
-  --px-color-option-green-bg:  light-dark(#d6e8d9, #1d3024);
-  --px-color-option-green-fg:  light-dark(#2f7a4d, #8ec99e);
-  --px-color-option-lime-bg:   light-dark(#dde6c5, #2c3318);
-  --px-color-option-lime-fg:   light-dark(#5c722e, #b8c98a);
-  --px-color-option-cyan-bg:   light-dark(#cee0d8, #1a2c28);
-  --px-color-option-cyan-fg:   light-dark(#3a6660, #8ec9bd);
-  --px-color-option-blue-bg:   light-dark(#cfdcd4, #1a2c24);
-  --px-color-option-blue-fg:   light-dark(#3a665a, #8ec9b0);
-  --px-color-option-violet-bg: light-dark(#dcd0d8, #2c1f28);
-  --px-color-option-violet-fg: light-dark(#665a66, #c4a8c0);
-  --px-color-option-pink-bg:   light-dark(#e8d6d8, #3a1f24);
-  --px-color-option-pink-fg:   light-dark(#8a3a4d, #e8a8b4);
-  --px-color-option-brown-bg:  light-dark(#e2d3bd, #2e2418);
-  --px-color-option-brown-fg:  light-dark(#7c4f1a, #d4b58a);
-  --px-color-option-black-bg:  light-dark(#1a2e20, #08120c);
-  --px-color-option-black-fg:  light-dark(#f4ede0, #ddd7c8);
-  --px-color-option-white-bg:  light-dark(#ffffff, #ddd7c8);
-  --px-color-option-white-fg:  light-dark(#1a2e20, #0e1c13);
+  --grove-color-option-grey-bg:   light-dark(#e6dec9, #192a1f);
+  --grove-color-option-grey-fg:   light-dark(#1a2e20, #ddd7c8);
+  --grove-color-option-red-bg:    light-dark(#f3d6cf, #3f1f1d);
+  --grove-color-option-red-fg:    light-dark(#8a3a2e, #e8a89a);
+  --grove-color-option-orange-bg: light-dark(#f0deba, #3a2a18);
+  --grove-color-option-orange-fg: light-dark(#8a5d2a, #d4b58a);
+  --grove-color-option-yellow-bg: light-dark(#efe2b3, #3a3318);
+  --grove-color-option-yellow-fg: light-dark(#7c5a1a, #d4c58a);
+  --grove-color-option-green-bg:  light-dark(#d6e8d9, #1d3024);
+  --grove-color-option-green-fg:  light-dark(#2f7a4d, #8ec99e);
+  --grove-color-option-lime-bg:   light-dark(#dde6c5, #2c3318);
+  --grove-color-option-lime-fg:   light-dark(#5c722e, #b8c98a);
+  --grove-color-option-cyan-bg:   light-dark(#cee0d8, #1a2c28);
+  --grove-color-option-cyan-fg:   light-dark(#3a6660, #8ec9bd);
+  --grove-color-option-blue-bg:   light-dark(#cfdcd4, #1a2c24);
+  --grove-color-option-blue-fg:   light-dark(#3a665a, #8ec9b0);
+  --grove-color-option-violet-bg: light-dark(#dcd0d8, #2c1f28);
+  --grove-color-option-violet-fg: light-dark(#665a66, #c4a8c0);
+  --grove-color-option-pink-bg:   light-dark(#e8d6d8, #3a1f24);
+  --grove-color-option-pink-fg:   light-dark(#8a3a4d, #e8a8b4);
+  --grove-color-option-brown-bg:  light-dark(#e2d3bd, #2e2418);
+  --grove-color-option-brown-fg:  light-dark(#7c4f1a, #d4b58a);
+  --grove-color-option-black-bg:  light-dark(#1a2e20, #08120c);
+  --grove-color-option-black-fg:  light-dark(#f4ede0, #ddd7c8);
+  --grove-color-option-white-bg:  light-dark(#ffffff, #ddd7c8);
+  --grove-color-option-white-fg:  light-dark(#1a2e20, #0e1c13);
 }
 
 /* ── Display serif on headings (UI + editor)
@@ -234,11 +234,11 @@ em {
    Dark:  richer accent glow under elevated surfaces. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --px-shadow-accent: 0 10px 32px rgb(78 168 114 / 0.22);
+    --grove-shadow-accent: 0 10px 32px rgb(78 168 114 / 0.22);
   }
 }
 @media (prefers-color-scheme: light) {
   :root {
-    --px-shadow-accent: 0 6px 18px rgb(47 122 77 / 0.18);
+    --grove-shadow-accent: 0 6px 18px rgb(47 122 77 / 0.18);
   }
 }
